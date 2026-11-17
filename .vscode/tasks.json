@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Host: Build & Stage Artifacts",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "pwsh.exe",
+          "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File"]
+        }
+      },
+      "command": "${workspaceFolder}/sandbox/prepare-host.ps1",
+      "problemMatcher": []
+    },
+    {
+      "label": "2. Sandbox: Run Evaluation & Collect Results",
+      "type": "shell",
+      "dependsOn": "1. Host: Build & Stage Artifacts",
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "options": {
+        "shell": {
+          "executable": "pwsh.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
+      },
+      "command": "Stop-Process -Name 'WindowsSandboxClient','WindowsSandbox' -Force -ErrorAction SilentlyContinue; Start-Process '${workspaceFolder}/sandbox/eval-build.wsb'; Write-Host '[*] Waiting for Windows Sandbox evaluation...'; $timeout = (Get-Date).AddMinutes(3); while (!(Test-Path '${workspaceFolder}/test-results/eval.done')) { if ((Get-Date) -gt $timeout) { Stop-Process -Name 'WindowsSandboxClient','WindowsSandbox' -Force -ErrorAction SilentlyContinue; throw 'Sandbox evaluation timed out.' }; Start-Sleep -Seconds 2 }; Get-Content '${workspaceFolder}/test-results/eval-run.log'; $code = [int](Get-Content '${workspaceFolder}/test-results/eval.done' -Raw).Trim(); Stop-Process -Name 'WindowsSandboxClient','WindowsSandbox' -Force -ErrorAction SilentlyContinue; exit $code",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

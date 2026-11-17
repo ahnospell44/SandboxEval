@@ -1,0 +1,14 @@
+{
+  "files.encoding": "utf8",
+  "files.associations": {
+    "*.wsb": "xml"
+  },
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/test-results/**": false
+  },
+  "search.exclude": {
+    "**/build": true,
+    "**/test-results": true
+  }
+}

@@ -1,0 +1,27 @@
+<Configuration>
+  <VGpu>Disable</VGpu>
+  <Networking>Disable</Networking>
+  <ClipboardRedirection>Disable</ClipboardRedirection>
+  <ProtectedClient>Enable</ProtectedClient>
+  <MemoryInMB>8192</MemoryInMB>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>{{WORKSPACE_ROOT}}\build</HostFolder>
+      <SandboxFolder>C:\Workspace\build</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>{{WORKSPACE_ROOT}}\sandbox</HostFolder>
+      <SandboxFolder>C:\Workspace\sandbox</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>{{WORKSPACE_ROOT}}\test-results</HostFolder>
+      <SandboxFolder>C:\Workspace\test-results</SandboxFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+    <Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Workspace\sandbox\invoke-tests.ps1</Command>
+  </LogonCommand>
+</Configuration>

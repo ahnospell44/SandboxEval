@@ -1,0 +1,10 @@
+# Transient build & sandbox outputs
+build/
+test-results/
+sandbox/eval-build.wsb
+
+# Keep workspace tasks/settings, ignore local VS Code caches
+.vscode/*
+!.vscode/tasks.json
+!.vscode/settings.json
+!.vscode/extensions.json
